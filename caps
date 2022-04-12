@@ -1,0 +1,35 @@
+# Creating a WScript.Shell onject
+[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing") 
+[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms") 
+$number = 500
+$i = 0
+$keyBoardObject = New-Object -ComObject WScript.Shell
+
+# Getting the status of Keys using .Net Object , this result of the ISkeyLock is in Boolean
+do{
+	$capsLockKeySatus = [System.Windows.Forms.Control]::IsKeyLocked('CapsLock')
+
+	if ( $capsLockKeySatus -eq $false )
+		   {
+			   Write-Host ""
+			   Write-Host "$i MINUTES"
+				  # Write-Host "Capslock key is OFF."
+					$keyBoardObject.SendKeys("{CAPSLOCK}")
+					Write-Host "Capslock key has been turned ON."
+		   }
+
+	 
+
+	else {              
+				Write-Host ""
+				Write-Host "$i MINUTES"
+				  # Write-Host "Capslock key is ON."
+				  # if you want to OFF the CapsLock Key {IF CAPSLOCK IS ALREADY on }, then please unComment the below Command.
+				  $keyBoardObject.SendKeys("{CAPSLOCK}")
+				  Write-Host "Capslock key has been turned OFF."
+		   }
+	$i++
+	sleep 60
+ }
+
+ while ($i -le $number) 
